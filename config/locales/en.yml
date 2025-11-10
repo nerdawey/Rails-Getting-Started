@@ -29,3 +29,32 @@
 
 en:
   hello: "Hello world"
+  products:
+    index:
+      title: "Products"
+      new_product: "New product"
+      edit: "Edit"
+      delete: "Delete"
+      back: "Back"
+    show:
+      title: "Product"
+      edit: "Edit"
+      delete: "Delete"
+      back: "Back"
+    form:
+      name: "Name"
+      description: "Description"
+      image: "Image"
+    new:
+      title: "New Product"
+    edit:
+      title: "Edit Product"
+  sessions:
+    new:
+      title: "Login"
+      email_address: "Email address"
+      password: "Password"
+      login: "Login"
+    logout: "Log out"
+    login: "Log in"
+  confirm_delete: "Are you sure?"

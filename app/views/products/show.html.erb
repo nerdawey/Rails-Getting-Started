@@ -1,10 +1,23 @@
 <% cache @product do %>
   <h1><%= @product.name %></h1>
 
-  <% if current_user %>
-    <%= link_to "Edit", edit_product_path(@product) %>
-    <%= link_to "Delete", product_path(@product), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+  <% if @product.image.attached? %>
+    <%= image_tag @product.image, alt: @product.name %>
   <% end %>
 
-  <%= link_to "Back", products_path %>
+  <%= @product.description %>
+
+  <% unless @product.in_stock? %>
+    <%= form_with url: subscribe_product_path(@product), method: :post do |form| %>
+      <%= form.email_field :email_address, placeholder: "Email address" %>
+      <%= form.submit "Notify me when in stock" %>
+    <% end %>
+  <% end %>
+
+  <% if current_user %>
+    <%= link_to t(".edit"), edit_product_path(@product) %>
+    <%= link_to t(".delete"), product_path(@product), data: { turbo_method: :delete, turbo_confirm: t("confirm_delete") } %>
+  <% end %>
+
+  <%= link_to t(".back"), products_path %>
 <% end %>

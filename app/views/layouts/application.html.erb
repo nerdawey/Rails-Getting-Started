@@ -24,9 +24,17 @@
 
   <body>
     <% if current_user %>
-      <%= link_to "Log out", logout_path, data: { turbo_method: :delete } %>
+      <%= link_to t("sessions.logout"), logout_path, data: { turbo_method: :delete } %>
     <% else %>
-      <%= link_to "Log in", login_path %>
+      <%= link_to t("sessions.login"), login_path %>
+    <% end %>
+
+    <% if notice %>
+      <p class="notice"><%= notice %></p>
+    <% end %>
+
+    <% if alert %>
+      <p class="alert"><%= alert %></p>
     <% end %>
 
     <%= yield %>
