@@ -15,11 +15,15 @@ class ProductsController < ApplicationController
 
   def create
     @product = Product.new(product_params)
-    if @product.save
-      expire_fragment "products"
-      redirect_to @product
-    else
-      render :new, status: :unprocessable_entity
+    respond_to do |format|
+      if @product.save
+        expire_fragment "products"
+        format.turbo_stream { render :create }
+        format.html { redirect_to @product }
+      else
+        format.turbo_stream { render :new, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -29,12 +33,16 @@ class ProductsController < ApplicationController
 
   def update
     @product = Product.find(params[:id])
-    if @product.update(product_params)
-      expire_fragment "products"
-      expire_fragment @product
-      redirect_to @product
-    else
-      render :edit, status: :unprocessable_entity
+    respond_to do |format|
+      if @product.update(product_params)
+        expire_fragment "products"
+        expire_fragment @product
+        format.turbo_stream { render :update }
+        format.html { redirect_to @product }
+      else
+        format.turbo_stream { render :edit, status: :unprocessable_entity }
+        format.html { render :edit, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -43,7 +51,10 @@ class ProductsController < ApplicationController
     expire_fragment "products"
     expire_fragment @product
     @product.destroy
-    redirect_to products_path, status: :see_other
+    respond_to do |format|
+      format.turbo_stream { render :destroy }
+      format.html { redirect_to products_path, status: :see_other }
+    end
   end
 
   private

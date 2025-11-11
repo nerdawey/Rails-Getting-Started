@@ -1,0 +1,12 @@
+<%= turbo_stream.update dom_id(@product) do %>
+  <div>
+    <%= link_to @product.name, product_path(@product.id) %>
+    <% if current_user %>
+      <%= link_to t("products.index.edit"), edit_product_path(@product) %>
+      <%= link_to t("products.index.delete"), product_path(@product), data: { turbo_method: :delete, turbo_confirm: t("confirm_delete") } %>
+    <% end %>
+  </div>
+<% end %>
+
+<%= turbo_stream.visit product_url(@product) %>
+
