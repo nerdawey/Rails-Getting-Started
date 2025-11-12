@@ -1,4 +1,4 @@
-<%= form_with model: product do |form| %>
+<%= form_with model: product, data: { controller: "form image-preview" } do |form| %>
     <% if form.object.errors.any? %>
       <p class="error"><%= form.object.errors.full_messages.first %></p>
     <% end %>
@@ -13,9 +13,14 @@
       <%= form.rich_text_area :description %>
     </div>
   
-    <div>
+    <div data-controller="image-preview">
       <%= form.label :image, t(".image") %>
-      <%= form.file_field :image %>
+      <%= form.file_field :image, data: { image_preview_target: "input" } %>
+      <% if product.image.attached? %>
+        <%= image_tag product.image, data: { image_preview_target: "preview" }, style: "max-width: 300px; display: block; margin-top: 10px;" %>
+      <% else %>
+        <%= image_tag "", data: { image_preview_target: "preview" }, style: "max-width: 300px; display: none; margin-top: 10px;" %>
+      <% end %>
     </div>
   
     <div>
@@ -24,6 +29,6 @@
     </div>
   
     <div>
-      <%= form.submit %>
+      <%= form.submit data: { form_target: "submit", action: "turbo:submit-start->form#submit turbo:submit-end->form#reset" } %>
     </div>
   <% end %>

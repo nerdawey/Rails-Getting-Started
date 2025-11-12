@@ -30,11 +30,11 @@
     <% end %>
 
     <% if notice %>
-      <p class="notice"><%= notice %></p>
+      <p class="notice" data-controller="flash" data-action="click->flash#dismiss" style="cursor: pointer;"><%= notice %></p>
     <% end %>
 
     <% if alert %>
-      <p class="alert"><%= alert %></p>
+      <p class="alert" data-controller="flash" data-action="click->flash#dismiss" style="cursor: pointer;"><%= alert %></p>
     <% end %>
 
     <%= yield %>
