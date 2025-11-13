@@ -1,5 +1,5 @@
 class SubscribersController < ApplicationController
-  skip_before_action :require_login, only: [:create, :destroy]
+  skip_before_action :require_login, only: [ :create, :destroy ]
 
   def create
     @product = Product.find(params[:product_id])

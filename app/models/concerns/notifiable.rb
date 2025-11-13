@@ -16,4 +16,3 @@ module Notifiable
       end
     end
 end
-
